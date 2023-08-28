@@ -26,7 +26,6 @@ public class Main {
 
 		} catch(Exception e) {
 
-			e.printStackTrace();
 			System.out.println("***********************************************************");
 			System.out.println("***********************************************************");
 			System.out.println("***** Para Executar informe os seguintes parametros: ******");

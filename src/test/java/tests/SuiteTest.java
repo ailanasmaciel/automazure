@@ -29,12 +29,12 @@ public class SuiteTest extends Hooks {
 				Response resp = given().spec(spec).header("Authorization", "Basic "+token)
 						.param("testCaseId", testCaseId).when().get("/ab-inbev/_apis/test/suites");
 				
+				assertEquals(resp.getStatusCode(), 200);
 				JsonPath body = resp.getBody().jsonPath();
 				String suiteId = body.getString("value.id[0]");
 				String planId = body.getString("value.plan.id[0]");
 				suiteAndPlan.put("planId", planId);
 				suiteAndPlan.put("suiteId", suiteId);
-				assertEquals(resp.getStatusCode(), 200);
 				return suiteAndPlan;
 	}
 }

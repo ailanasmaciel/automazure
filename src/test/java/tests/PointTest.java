@@ -35,7 +35,7 @@ public class PointTest extends Hooks {
 	public void updateTestCaseResult(String testCaseStatus, String planId, String suiteId, String pointId) {
 		String body = "{\"outcome\": \"" + testCaseStatus + "\"}";
 		
-		if(testCaseStatus == "Active" ) {
+		if(testCaseStatus.equals("Active") ) {
 			body = "{\"resetToActive\": \"true\"}";
 		}
 		
@@ -47,13 +47,13 @@ public class PointTest extends Hooks {
 				        .body(body)
 				        .patch("/ab-inbev/Aurora_Program/_apis/test/Plans/" + planId + "/Suites/" + suiteId + "/points/"
 						+ pointId + "?api-version=7.0");
+		assertEquals(resp.getStatusCode(), 200);
 		System.out.println("***********************************************************");
 		System.out.println("***********************************************************");
 		System.out.println("****************** SUCCESSFULLY EXECUTED ******************");
 		System.out.println("***********************************************************");
 		System.out.println("***********************************************************");
 		
-		assertEquals(resp.getStatusCode(), 200);
 	}
 
 }
