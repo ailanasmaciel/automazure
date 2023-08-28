@@ -1,7 +1,7 @@
 package application;
 
+import java.util.Base64;
 import java.util.Map;
-
 import hooks.Hooks;
 import tests.PointTest;
 import tests.SuiteTest;
@@ -11,7 +11,10 @@ public class Main {
 	public static void main(String[] args) {
 		
 		try {
-		String token = args[0];
+
+		String tokenAzure = ":" + args[0];
+		String token = Base64.getEncoder().encodeToString(tokenAzure.getBytes());
+		System.out.println("Resultado  " + token);
 		String testCaseId = args[1];
 		String statusTestCase = args[2];
 		Hooks init = new Hooks();
@@ -21,8 +24,9 @@ public class Main {
 		Map<String, String> suiteAndPlan = suite.getSuiteIdAndPlanId(testCaseId);
 		String pointId = point.getTestPointByTestCase(testCaseId);
 		point.updateTestCaseResult(statusTestCase, suiteAndPlan.get("planId"), suiteAndPlan.get("suiteId"), pointId);
-		
+
 		} catch(Exception e) {
+
 			e.printStackTrace();
 			System.out.println("***********************************************************");
 			System.out.println("***********************************************************");
@@ -34,9 +38,7 @@ public class Main {
 			System.out.println("***********************************************************");
 		
 			e.printStackTrace();
+			
 		}
-		
-
 	}
-
 }
