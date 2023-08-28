@@ -35,6 +35,10 @@ public class PointTest extends Hooks {
 	public void updateTestCaseResult(String testCaseStatus, String planId, String suiteId, String pointId) {
 		String body = "{\"outcome\": \"" + testCaseStatus + "\"}";
 		
+		if(testCaseStatus == "Active" ) {
+			body = "{\"resetToActive\": \"true\"}";
+		}
+		
 		RequestSpecification spec = new RequestSpecBuilder().setContentType("application/json").build();
 
 		Response resp = given()
