@@ -14,7 +14,6 @@ public class Main {
 
 		String tokenAzure = ":" + args[0];
 		String token = Base64.getEncoder().encodeToString(tokenAzure.getBytes());
-		System.out.println("Resultado  " + token);
 		String testCaseId = args[1];
 		String statusTestCase = args[2];
 		Hooks init = new Hooks();
