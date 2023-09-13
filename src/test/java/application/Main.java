@@ -1,7 +1,7 @@
 package application;
 
-import java.util.Base64;
 import java.util.Map;
+
 import hooks.Hooks;
 import tests.PointTest;
 import tests.SuiteTest;
@@ -12,8 +12,7 @@ public class Main {
 		
 		try {
 
-		String tokenAzure = ":" + args[0];
-		String token = Base64.getEncoder().encodeToString(tokenAzure.getBytes());
+		String token = args[0];
 		String testCaseId = args[1];
 		String statusTestCase = args[2];
 		Hooks init = new Hooks();

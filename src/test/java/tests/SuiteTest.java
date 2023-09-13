@@ -3,6 +3,7 @@ package tests;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class SuiteTest extends Hooks {
 	String token = "";
 	
 	public SuiteTest(String token) {
-		this.token = token;
+		this.token = Base64.getEncoder().encodeToString((":" + token).getBytes());
 	}
 	
 	Map<String, String> suiteAndPlan = new HashMap<String, String>();

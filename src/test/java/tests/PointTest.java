@@ -3,6 +3,8 @@ package tests;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.util.Base64;
+
 import hooks.Hooks;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;
@@ -12,10 +14,9 @@ import io.restassured.specification.RequestSpecification;
 public class PointTest extends Hooks {
 	String token = "";
 	
-	
 
 	public PointTest(String token) {
-		this.token = token;
+		this.token = Base64.getEncoder().encodeToString((":" + token).getBytes());
 	}
 
 	public String getTestPointByTestCase(String testCaseId) {
