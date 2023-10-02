@@ -1,10 +1,12 @@
 package application;
 
 import java.util.Map;
+import java.util.Objects;
 
 import hooks.Hooks;
 import tests.PointTest;
 import tests.SuiteTest;
+import tests.ResultAttachment;
 
 public class Main {
 
@@ -15,13 +17,27 @@ public class Main {
 		String token = args[0];
 		String testCaseId = args[1];
 		String statusTestCase = args[2];
+		String filePath = args[3];
+		String isLastTest = args[4];
 		Hooks init = new Hooks();
 		SuiteTest suite = new SuiteTest(token);
 		PointTest point = new PointTest(token);
+		ResultAttachment resultAttach = new ResultAttachment(token);
 		init.baseTest();
 		Map<String, String> suiteAndPlan = suite.getSuiteIdAndPlanId(testCaseId);
 		String pointId = point.getTestPointByTestCase(testCaseId);
 		point.updateTestCaseResult(statusTestCase, suiteAndPlan.get("planId"), suiteAndPlan.get("suiteId"), pointId);
+
+		if(Objects.equals(isLastTest,"True")){
+			String fileName = ResultAttachment.getFileNameWithExtension(filePath);
+			ResultAttachment.getFileExtension(filePath);
+			String base64 = ResultAttachment.EncodeBase64(filePath);
+			String runId = resultAttach.getTestRunByTestCase(testCaseId);
+			String resultId = resultAttach.getTestResultByTestCase(testCaseId);
+			resultAttach.sendAttachment(base64, fileName, runId, resultId);
+		}
+
+
 
 		} catch(Exception e) {
 
