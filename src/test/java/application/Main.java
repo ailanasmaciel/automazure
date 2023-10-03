@@ -10,34 +10,34 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		if (args.length < 4) {
-//			System.err.println("Insufficient number of arguments. Provide at least 4 arguments.");
-//			System.exit(1);
-//		}
+		if (args.length < 4) {
+			System.err.println("Insufficient number of arguments. Provide at least 4 arguments.");
+			System.exit(1);
+		}
 
 		try {
 
-			String objective = "attachEvidence";
-			String token = "vshp6h7yfo5etvhdz57vfv236t6hye5s52rkeqrnqhonxbqpikha";
-			String testCaseId = "2331742";
+			String objective = args[0];
+			String token = null;
+			String testCaseId = null;
 			String statusTestCase = null;
-			String filePath = "src/test/java/application/automa.png";
+			String filePath = null;
 
-//			switch (objective){
-//				case "setStatus":
-//					token = args[1];
-//					testCaseId = args[2];
-//					statusTestCase = args[3];
-//					break;
-//				case "attachEvidence":
-//					token = args[1];
-//					testCaseId = args[2];
-//					filePath = args[3];
-//					break;
-//				default:
-//					System.err.println("Invalid Objective. Try again with option 'setStatus' ou 'attachEvidence'.");
-//					break;
-//			}
+			switch (objective){
+				case "setStatus":
+					token = args[1];
+					testCaseId = args[2];
+					statusTestCase = args[3];
+					break;
+				case "attachEvidence":
+					token = args[1];
+					testCaseId = args[2];
+					filePath = args[3];
+					break;
+				default:
+					System.err.println("Invalid Objective. Try again with option 'setStatus' ou 'attachEvidence'.");
+					break;
+			}
 
 			Hooks init = new Hooks();
 			SuiteTest suite = new SuiteTest(token);
@@ -58,7 +58,6 @@ public class Main {
 				String runId = resultAttach.getTestRunByTestCase(testCaseId).replace("[", "").replace("]", "");
 				String resultId = resultAttach.getTestResultByTestCase(testCaseId).replace("[", "").replace("]", "");
 				resultAttach.sendAttachment(base64, fileName, runId, resultId);
-				System.out.println(runId + " - " + resultId);
 			}
 
 		} catch(Exception e) {
