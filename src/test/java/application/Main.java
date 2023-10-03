@@ -10,34 +10,34 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		if (args.length < 4) {
-			System.err.println("Número insuficiente de argumentos. Forneça pelo menos 4 argumentos.");
-			System.exit(1);
-		}
+//		if (args.length < 4) {
+//			System.err.println("Insufficient number of arguments. Provide at least 4 arguments.");
+//			System.exit(1);
+//		}
 
 		try {
 
-			String objective = args[0];
-			String token = null;
-			String testCaseId = null;
+			String objective = "attachEvidence";
+			String token = "vshp6h7yfo5etvhdz57vfv236t6hye5s52rkeqrnqhonxbqpikha";
+			String testCaseId = "2331742";
 			String statusTestCase = null;
-			String filePath = null;
+			String filePath = "src/test/java/application/automa.png";
 
-			switch (objective){
-				case "setStatus":
-					token = args[1];
-					testCaseId = args[2];
-					statusTestCase = args[3];
-					break;
-				case "attachEvidence":
-					token = args[1];
-					testCaseId = args[2];
-					filePath = args[3];
-					break;
-				default:
-					System.err.println("Objetivo não reconhecido. Tente novamente com a opção setStatus ou attachEvidence.");
-					break;
-			}
+//			switch (objective){
+//				case "setStatus":
+//					token = args[1];
+//					testCaseId = args[2];
+//					statusTestCase = args[3];
+//					break;
+//				case "attachEvidence":
+//					token = args[1];
+//					testCaseId = args[2];
+//					filePath = args[3];
+//					break;
+//				default:
+//					System.err.println("Invalid Objective. Try again with option 'setStatus' ou 'attachEvidence'.");
+//					break;
+//			}
 
 			Hooks init = new Hooks();
 			SuiteTest suite = new SuiteTest(token);
@@ -55,9 +55,10 @@ public class Main {
 				String fileName = ResultAttachment.getFileNameWithExtension(filePath);
 				ResultAttachment.getFileExtension(filePath);
 				String base64 = ResultAttachment.EncodeBase64(filePath);
-				String runId = resultAttach.getTestRunByTestCase(testCaseId);
-				String resultId = resultAttach.getTestResultByTestCase(testCaseId);
+				String runId = resultAttach.getTestRunByTestCase(testCaseId).replace("[", "").replace("]", "");
+				String resultId = resultAttach.getTestResultByTestCase(testCaseId).replace("[", "").replace("]", "");
 				resultAttach.sendAttachment(base64, fileName, runId, resultId);
+				System.out.println(runId + " - " + resultId);
 			}
 
 		} catch(Exception e) {

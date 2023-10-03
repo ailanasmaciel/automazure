@@ -42,9 +42,6 @@ public class ResultAttachment extends Hooks {
 				// Converte o conteúdo do ByteArrayOutputStream para Base64
 				byte[] fileBytes = baos.toByteArray();
 				base64String = Base64.getEncoder().encodeToString(fileBytes);
-
-				// Imprime a string Base64
-				System.out.println("In-Method: " + base64String);
 			} else {
 				System.err.println("File is not PNG or DOCX.");
 			}
@@ -108,7 +105,7 @@ public class ResultAttachment extends Hooks {
 				.spec(spec)
 				.header("Authorization", "Basic " + token)
 				.body(body)
-				.post("/ab-inbev/Aurora_Program/_apis/testRuns/" + runId + "/Results/" + ResultId + "/attachments?api-version=7.0");
+				.post("/ab-inbev/Aurora_Program/_apis/test/Runs/" + runId + "/Results/" + ResultId + "/attachments?api-version=7.0");
 
 		assertEquals(resp.getStatusCode(), 200);
 	}
