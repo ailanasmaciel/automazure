@@ -14,21 +14,40 @@ public class Main {
 		
 		try {
 
-		String token = args[0];
-		String testCaseId = args[1];
-		String statusTestCase = args[2];
-		String filePath = args[3];
-		String isLastTest = args[4];
+			String objective = args[0];
+			String token = null;
+			String testCaseId = null;
+			String statusTestCase = null;
+			String filePath = null;
+
+		switch (objective){
+			case "setStatus":
+				token = args[1];
+				testCaseId = args[2];
+				statusTestCase = args[3];
+				break;
+			case "attachEvidence":
+				token = args[1];
+			 	testCaseId = args[2];
+				filePath = args[3];
+				break;
+			default:
+				System.err.println("Objetivo não reconhecido. Tente novamente com a opção setStatus ou attachEvidence.");
+				break;
+		}
+
 		Hooks init = new Hooks();
 		SuiteTest suite = new SuiteTest(token);
 		PointTest point = new PointTest(token);
-		ResultAttachment resultAttach = new ResultAttachment(token);
 		init.baseTest();
 		Map<String, String> suiteAndPlan = suite.getSuiteIdAndPlanId(testCaseId);
 		String pointId = point.getTestPointByTestCase(testCaseId);
-		point.updateTestCaseResult(statusTestCase, suiteAndPlan.get("planId"), suiteAndPlan.get("suiteId"), pointId);
 
-		if(Objects.equals(isLastTest,"True")){
+		if (objective == "setStatus"){
+			point.updateTestCaseResult(statusTestCase, suiteAndPlan.get("planId"), suiteAndPlan.get("suiteId"), pointId);
+		}
+		else{
+			ResultAttachment resultAttach = new ResultAttachment(token);
 			String fileName = ResultAttachment.getFileNameWithExtension(filePath);
 			ResultAttachment.getFileExtension(filePath);
 			String base64 = ResultAttachment.EncodeBase64(filePath);
@@ -37,8 +56,6 @@ public class Main {
 			resultAttach.sendAttachment(base64, fileName, runId, resultId);
 		}
 
-
-
 		} catch(Exception e) {
 
 			System.out.println("***********************************************************");
@@ -46,7 +63,7 @@ public class Main {
 			System.out.println("***** Para Executar informe os seguintes parametros: ******");
 			System.out.println("***** 1º Token                                       ******");
 			System.out.println("***** 2º Test Case ID                                ******");
-			System.out.println("***** 3º Status Test Case                            ******");
+			System.out.println("***** 3º Status Test Case ou filePath                ******");
 			System.out.println("***********************************************************");
 			System.out.println("***********************************************************");
 		
